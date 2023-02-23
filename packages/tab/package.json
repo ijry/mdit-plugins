@@ -1,6 +1,6 @@
 {
-  "name": "@mdit/plugin-tab",
-  "version": "0.3.0",
+  "name": "mdit-plugin-tab",
+  "version": "0.3.6",
   "description": "tab plugin for MarkdownIt",
   "keywords": [
     "markdownit",
@@ -41,6 +41,7 @@
     "markdown-it": "^13.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

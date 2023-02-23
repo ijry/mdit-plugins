@@ -343,17 +343,23 @@ export const tab: PluginWithOptions<MarkdownItTabOptions> = (md, options) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (token.meta.id) token.attrJoin("data-id", token.meta.id as string);
 
+      let now  = Date.now();
       const tabs = data.map(
         ({ title, id }, index) =>
-          `<button type="button" class="${name}-tab-button${
-            active === index ? " active" : ""
-          }" data-tab="${index}"${id ? ` data-id="${escapeHtml(id)}"` : ""}${
+          `<input type="radio" ${active === index ? "checked" : ""} class="${name}-tab-button${
+            active === index ? " active" : ""}" name="${'tab-' + now}" id="${'tab-' + now + '-' + index}"
+            data-tab="${index}"${id ? ` data-id="${escapeHtml(id)}"` : ""}${
             active === index ? " data-active" : ""
-          }>${escapeHtml(title)}</button>`
+          }/>
+          <label class="${name}-tab-label${
+            active === index ? " active" : ""}" for="${'tab-' + now + '-' + index}"
+            data-tab="${index}"${id ? ` data-id="${escapeHtml(id)}"` : ""}${
+            active === index ? " data-active" : ""
+          }>${escapeHtml(title)}</label>`
       );
 
       return `\
-<div${self.renderAttrs(token)}>
+<form><div${self.renderAttrs(token)}>
   <div class="${name}-tabs-header">
     ${tabs.join("\n    ")}
   </div>
@@ -362,7 +368,7 @@ export const tab: PluginWithOptions<MarkdownItTabOptions> = (md, options) => {
 
     tabsCloseRenderer = (): string => `
   </div>
-</div>`,
+</div></form>`,
 
     tabOpenRenderer = (
       info: MarkdownItTabData,
