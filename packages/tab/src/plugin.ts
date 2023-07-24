@@ -89,9 +89,15 @@ const getTabRule =
 
     const openToken = state.push(`${name}_tab_open`, "", 1);
 
-    const [, title, id] = /^(.*?)(?:(?<!\\)#([^#]*))?$/.exec(
-      info.replace(/^:active/, "")
-    )!;
+    let title = '',id = '';
+    // /^(.*?)(?:(?<!\\)#([^#]*))?$/
+    try {
+      [, title, id] = /^(.*?)(?:#([^#]+))?$/.exec(
+        info.replace(/^:active/, "")
+      );
+    } catch (error) {
+      console.log(error)
+    }
 
     openToken.block = true;
     openToken.markup = markup;
